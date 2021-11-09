@@ -1,0 +1,22 @@
+.login_page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    border-color:grey;
+    border-style: solid;
+    border-radius:20px;
+    width:200px;
+    padding-bottom:10px;
+    margin-top: 20vh;
+  }
+  
+
+  .login_page label {
+    margin: 5px;
+  }
+  
+  .login_page button {
+    margin-top: 10px;
+  }
+  

@@ -1,0 +1,51 @@
+.App {
+  text-align: center;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top:50px;
+}
+
+.login{
+  margin-top: 20vh;
+}
+
+.editbtn{
+  height: 2rem;
+  width:10vw
+}
+
+.deletebtn{
+  height:2rem;
+  width:10vw;
+}
+
+.logoutbtn{
+  margin: 20px;
+  position:static;
+}
+
+.login_page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  border-color:grey;
+  border-style: solid;
+  border-radius:20px;
+  width:200px;
+  padding-bottom:10px;
+}
+.buttonwrap{
+  margin-top:15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login_page label {
+  margin: 5px;
+}
+
+.login_page button {
+  margin-top: 10px;
+}
