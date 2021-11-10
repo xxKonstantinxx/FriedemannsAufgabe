@@ -58,10 +58,9 @@ function NewAd (props: IProps){
             <label>Title:</label>
             <input type="text" onChange={(event) => {setTitle(event.target.value)}}></input>
             <label>categories</label>
-            <select name="categories" onChange={(event) =>{ let x = []
-            x.push(event.target.value)
-            setCategories(x)}}>
-                <option value={[]}>None</option>
+            <select name="categories" onChange={(event) =>{
+            setCategories([event.target.value])}}>
+                <option value={""}>None</option>
                 {props.categories.map((val, key) => { 
                     return <option value={val.id}>{val.name}</option>
                 })}

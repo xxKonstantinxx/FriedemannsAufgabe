@@ -1,12 +1,12 @@
 import React from "react";
 import "./Ads.css";
-import EditAd from './EditAd'
+import EditAd from "./EditAd";
 
 interface IProps {
   ads: Array<Ad>;
-  categories: Array<categorie>
-  token: String | null
-  onGetAds: () => void
+  categories: Array<categorie>;
+  token: String | null;
+  onGetAds: () => void;
 }
 
 interface categorie {
@@ -24,8 +24,6 @@ interface Ad {
 }
 
 function Ads(props: IProps) {
-
-
   return (
     <div className="ads-container">
       <div className="label">
@@ -38,7 +36,16 @@ function Ads(props: IProps) {
       {props.ads.map((val, key) => {
         return (
           <div key={key}>
-            <EditAd token={props.token} onGetAds={props.onGetAds} click_url={val.click_url} id={val.id} title={val.title} categories={val.categories} url={val.url} categorieList={props.categories}/>
+            <EditAd
+              token={props.token}
+              onGetAds={props.onGetAds}
+              click_url={val.click_url}
+              id={val.id}
+              title={val.title}
+              categories={val.categories}
+              url={val.url}
+              categorieList={props.categories}
+            />
           </div>
         );
       })}

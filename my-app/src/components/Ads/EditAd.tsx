@@ -38,7 +38,7 @@ function EditAd(props: IProps) {
         url: `http://127.0.0.1:8888/urls/${props.click_url}`,
         data: { url: editedUrl },
         headers: {
-          AuthoriZation: `Bearer ${props.token}`,
+          authorization: `Bearer ${props.token}`,
           "Content-Type": "application/json",
         },
       })
@@ -49,7 +49,7 @@ function EditAd(props: IProps) {
             url: `http://127.0.0.1:8888/ads/${props.id}`,
             data: { title: editedTitle, categories: editedCategories },
             headers: {
-              AuthoriZation: `Bearer ${props.token}`,
+              authorization: `Bearer ${props.token}`,
               "Content-Type": "application/json",
             },
           })
@@ -67,7 +67,7 @@ function EditAd(props: IProps) {
         url: `http://127.0.0.1:8888/ads/${props.id}`,
         data: { title: props.title, categories: editedCategories },
         headers: {
-          AuthoriZation: `Bearer ${props.token}`,
+          authorization: `Bearer ${props.token}`,
           "Content-Type": "application/json",
         },
       })
@@ -83,7 +83,7 @@ function EditAd(props: IProps) {
         url: `http://127.0.0.1:8888/ads/${props.id}`,
         data: { title: editedTitle, categories: editedCategories },
         headers: {
-          AuthoriZation: `Bearer ${props.token}`,
+          authorization: `Bearer ${props.token}`,
           "Content-Type": "application/json",
         },
       })
@@ -100,7 +100,7 @@ function EditAd(props: IProps) {
       method: "delete",
       url: `http://127.0.0.1:8888/ads/${props.id}`,
       headers: {
-        AuthoriZation: `Bearer ${props.token}`
+        authorization: `Bearer ${props.token}`
       },
     }).then((res) => {console.log(res); props.onGetAds()})
   }
@@ -147,12 +147,10 @@ function EditAd(props: IProps) {
             className="categorie edit-ad"
             name="categorie"
             onChange={(event) => {
-              let x = [];
-              x.push(event.target.value);
-              setEditedCategories(x);
+              setEditedCategories([event.target.value]);
             }}
           >
-            <option value={[]}>None</option>
+            <option value={""}>None</option>
             {props.categorieList.map((val, key) => {
               return <option value={val.id}>{val.name}</option>;
             })}

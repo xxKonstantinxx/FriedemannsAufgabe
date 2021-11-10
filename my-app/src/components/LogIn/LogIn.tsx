@@ -11,15 +11,17 @@ interface data {
 function App() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [isValid, setIsValid] = useState(true)
+  const [isValid, setIsValid] = useState(true);
 
   function logInHandler() {
-    login().then((res) => {
-      sessionStorage.setItem("token", res.data.token);
-      sessionStorage.setItem("refresh_token", res.data.refresh_token);
-      sessionStorage.setItem("expires", JSON.stringify(res.data.expires));
-      window.location.replace("/home");
-    }).catch(() => setIsValid(false));
+    login()
+      .then((res) => {
+        sessionStorage.setItem("token", res.data.token);
+        sessionStorage.setItem("refresh_token", res.data.refresh_token);
+        sessionStorage.setItem("expires", JSON.stringify(res.data.expires));
+        window.location.replace("/home");
+      })
+      .catch(() => setIsValid(false));
   }
 
   function login() {
@@ -30,7 +32,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => res).catch(res => res);
+    });
   }
 
   return (
@@ -60,7 +62,11 @@ function App() {
           Log in
         </button>
       </div>
-      {!isValid? <p>username or password is invalid... or maybe both, idk</p> : <div></div>}
+      {!isValid ? (
+        <p>username or password is invalid... or maybe both, idk</p>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }
