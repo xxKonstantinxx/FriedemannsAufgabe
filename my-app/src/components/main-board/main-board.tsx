@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Ads from "../Ads/Ads";
-import NewAd from "../Ads/NewAd";
+import Ads from "../ads/ads";
+import NewAd from "../ads/new-ad";
 import Axios from "axios";
 
 interface urls {
@@ -33,7 +33,7 @@ interface MatchedAd {
 const MainBoard = () => {
   const [matchedAds, setMatchedAds] = useState<Array<MatchedAd>>([]);
   const [categories, setCategories] = useState<Array<categories>>([]);
-  const [token, setToken] = useState<String | null>("");
+  const [token, setToken] = useState<string | null>("");
 
   const getAds = useCallback(() => {
     return Axios.request<Array<Ad>>({
@@ -133,6 +133,7 @@ const MainBoard = () => {
           onGetAds={getAdsHandler}
         />
         <NewAd token={token} categories={categories} onGetAds={getAdsHandler} />
+        <button></button>
       </div>
     </div>
   );

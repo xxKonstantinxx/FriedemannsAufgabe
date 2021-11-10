@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import LogIn from './components/LogIn/LogIn'
+import LogIn from './components/login/login'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-import MainBoard from "./components/MainBoard/MainBoard";
+import MainBoard from "./components/main-board/main-board";
 
 function App (){
   return (<div>

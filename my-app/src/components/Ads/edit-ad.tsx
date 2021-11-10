@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Axios from "axios";
-import "./Ads.css";
+import "./ads.css";
 
 interface IProps {
   title: string;
   categories: string[];
   url: string | undefined;
   categorieList: Array<categories>;
-  token: String | null;
+  token: string | null;
   id: string;
   click_url: string;
   onGetAds: () => void;
@@ -149,6 +149,7 @@ function EditAd(props: IProps) {
             onChange={(event) => {
               setEditedCategories([event.target.value]);
             }}
+            multiple
           >
             <option value={""}>None</option>
             {props.categorieList.map((val, key) => {
