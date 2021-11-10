@@ -3,6 +3,13 @@ import Ads from "../ads/ads";
 import NewAd from "../ads/new-ad";
 import Axios from "axios";
 
+interface Data {
+  expires: number;
+  refresh_token: string;
+  token: string;
+  token_type: string;
+}
+
 interface Urls {
   id: string;
   url: string;
@@ -33,14 +40,41 @@ interface MatchedAd {
 const MainBoard = () => {
   const [matchedAds, setMatchedAds] = useState<Array<MatchedAd>>([]);
   const [categories, setCategories] = useState<Array<Categories>>([]);
-  const [token, setToken] = useState<string>("");
+  const [token, setToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
+  const [tokenExpires, setTokenExpires] = useState<number>();
+
+
+
+  function refreshSession(){
+    Axios.request<Data>({
+      method: "post",
+      url: "http://127.0.0.1:8888/token_refresh",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {refresh_token: refreshToken}
+    }).then((res) => {
+      sessionStorage.setItem("token", res.data.token);
+      sessionStorage.setItem("refresh_token", res.data.refresh_token);
+      sessionStorage.setItem("expires", JSON.stringify(res.data.expires));
+      setToken(res.data.token)
+      setRefreshToken(res.data.refresh_token)
+      setTokenExpires(res.data.expires)
+      sessionHandler();
+      console.log("Token refreshed")
+  })}
+
+  function sessionHandler(){
+    setTimeout(refreshSession, 300000)
+  }
 
   const getAds = useCallback(() => {
     return Axios.request<Array<Ad>>({
       method: "get",
       url: "http://127.0.0.1:8888/ads",
       headers: {
-        AuthoriZation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     }).then((res) => res.data);
   }, [token]);
@@ -50,7 +84,7 @@ const MainBoard = () => {
       method: "get",
       url: "http://127.0.0.1:8888/urls",
       headers: {
-        AuthoriZation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     }).then((res) => res.data);
   }, [token]);
@@ -60,7 +94,7 @@ const MainBoard = () => {
       method: "get",
       url: "http://127.0.0.1:8888/categories",
       headers: {
-        AuthoriZation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     }).then((res) => res.data);
   }, [token]);
@@ -102,11 +136,14 @@ const MainBoard = () => {
     Promise.all([getAds(), getUrls(), getCategories()]).then((res) => {
       matchAds(res);
       setCategories(res[2]);
+      sessionHandler();
     });
-  }, [getAds, getCategories, getUrls]);
+  }, [getAds, getCategories, getUrls,]);
 
   useEffect(() => {
-    setToken(JSON.stringify(sessionStorage.getItem("token")));
+    setToken(String(sessionStorage.getItem("token")));
+    setRefreshToken(String(sessionStorage.getItem("refresh_token")));
+    setTokenExpires(Number(sessionStorage.getItem("expires")))
     fetchData();
   }, [fetchData]);
 
@@ -133,7 +170,9 @@ const MainBoard = () => {
           onGetAds={getAdsHandler}
         />
         <NewAd token={token} categories={categories} onGetAds={getAdsHandler} />
-        <button></button>
+        <button onClick={(event: React.MouseEvent<HTMLElement>) => {
+          sessionHandler();
+        }}></button>
       </div>
     </div>
   );
