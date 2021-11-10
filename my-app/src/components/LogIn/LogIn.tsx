@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
 
-interface data {
+interface Data {
   expires: number;
   refresh_token: string;
   token: string;
@@ -25,7 +25,7 @@ function App() {
   }
 
   function login() {
-    return Axios.request<data>({
+    return Axios.request<Data>({
       method: "post",
       url: "http://127.0.0.1:8888/login",
       data: { username: userName, password: password },

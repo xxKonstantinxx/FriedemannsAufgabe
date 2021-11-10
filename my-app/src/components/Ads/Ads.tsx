@@ -5,7 +5,7 @@ import EditAd from "./edit-ad";
 interface IProps {
   ads: Array<Ad>;
   categories: Array<Categorie>;
-  token: string | null;
+  token: string;
   onGetAds: () => void;
 }
 

@@ -6,14 +6,14 @@ interface IProps {
   title: string;
   categories: string[];
   url: string | undefined;
-  categorieList: Array<categories>;
-  token: string | null;
+  categorieList: Array<Categories>;
+  token: string;
   id: string;
   click_url: string;
   onGetAds: () => void;
 }
 
-interface categories {
+interface Categories {
   id: string;
   name: string;
   ads: Array<string>;
