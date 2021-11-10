@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 interface IProps {
     categories: Array<categories>
-    token:String | null
+    token: string
     onGetAds: () => void
   }
   
@@ -16,7 +16,7 @@ interface IProps {
   interface urlData{
       id: string
       url: string
-      ad: string | null
+      ad: string
   }
   
 

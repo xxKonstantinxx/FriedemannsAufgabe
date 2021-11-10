@@ -1,15 +1,15 @@
 import React from "react";
-import "./Ads.css";
-import EditAd from "./EditAd";
+import "./ads.css";
+import EditAd from "./edit-ad";
 
 interface IProps {
   ads: Array<Ad>;
-  categories: Array<categorie>;
-  token: String | null;
+  categories: Array<Categorie>;
+  token: string;
   onGetAds: () => void;
 }
 
-interface categorie {
+interface Categorie {
   id: string;
   name: string;
   ads: Array<string>;

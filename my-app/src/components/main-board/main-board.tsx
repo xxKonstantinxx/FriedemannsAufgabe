@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Ads from "../Ads/Ads";
-import NewAd from "../Ads/NewAd";
+import Ads from "../ads/ads";
+import NewAd from "../ads/new-ad";
 import Axios from "axios";
 
-interface urls {
+interface Urls {
   id: string;
   url: string;
   ad: string;
@@ -16,7 +16,7 @@ interface Ad {
   categories: Array<string>;
 }
 
-interface categories {
+interface Categories {
   id: string;
   name: string;
   ads: Array<string>;
@@ -32,8 +32,8 @@ interface MatchedAd {
 
 const MainBoard = () => {
   const [matchedAds, setMatchedAds] = useState<Array<MatchedAd>>([]);
-  const [categories, setCategories] = useState<Array<categories>>([]);
-  const [token, setToken] = useState<String | null>("");
+  const [categories, setCategories] = useState<Array<Categories>>([]);
+  const [token, setToken] = useState<string>("");
 
   const getAds = useCallback(() => {
     return Axios.request<Array<Ad>>({
@@ -46,7 +46,7 @@ const MainBoard = () => {
   }, [token]);
 
   const getUrls = useCallback(() => {
-    return Axios.request<Array<urls>>({
+    return Axios.request<Array<Urls>>({
       method: "get",
       url: "http://127.0.0.1:8888/urls",
       headers: {
@@ -56,7 +56,7 @@ const MainBoard = () => {
   }, [token]);
 
   const getCategories = useCallback(() => {
-    return Axios.request<Array<categories>>({
+    return Axios.request<Array<Categories>>({
       method: "get",
       url: "http://127.0.0.1:8888/categories",
       headers: {
@@ -65,7 +65,7 @@ const MainBoard = () => {
     }).then((res) => res.data);
   }, [token]);
 
-  function matchAds(res: [Ad[], urls[], categories[]]) {
+  function matchAds(res: [Ad[], Urls[], Categories[]]) {
     let matched: Array<MatchedAd> = [];
     let adsToMatch = res[0];
     let urlsToMatch = res[1];
@@ -106,7 +106,7 @@ const MainBoard = () => {
   }, [getAds, getCategories, getUrls]);
 
   useEffect(() => {
-    setToken(sessionStorage.getItem("token"));
+    setToken(JSON.stringify(sessionStorage.getItem("token")));
     fetchData();
   }, [fetchData]);
 
@@ -133,6 +133,7 @@ const MainBoard = () => {
           onGetAds={getAdsHandler}
         />
         <NewAd token={token} categories={categories} onGetAds={getAdsHandler} />
+        <button></button>
       </div>
     </div>
   );
