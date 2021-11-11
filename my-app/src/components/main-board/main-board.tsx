@@ -138,7 +138,7 @@ const MainBoard = () => {
       setCategories(res[2]);
       sessionHandler();
     });
-  }, [getAds, getCategories, getUrls,]);
+  }, [getAds, getCategories, getUrls]);
 
   useEffect(() => {
     setToken(String(sessionStorage.getItem("token")));
@@ -148,7 +148,8 @@ const MainBoard = () => {
   }, [fetchData]);
 
   function logOut(): void {
-    Axios.get("http://127.0.0.1:8888/logout");
+    Axios.get("http://127.0.0.1:8888/logout").then();
+    sessionStorage.clear()
     window.location.replace("/");
   }
 
