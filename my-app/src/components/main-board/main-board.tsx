@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Ads from "../ads/ads";
 import NewAd from "../ads/new-ad";
-import Axios from "axios";
-import { FetchData, getCategories } from "../../logic/data-handler";
+import { fetchData, getCategories, logOut } from "../../logic/data-handler";
 import { sessionHandler } from "../../logic/session-handler";
 
 interface Categories {
@@ -29,14 +28,8 @@ const MainBoard = () => {
   }, []);
 
   async function getAdsHandler() {
-    setMatchedAds(await FetchData());
+    setMatchedAds(await fetchData());
     setCategories(await getCategories(String(sessionStorage.getItem("token"))));
-  }
-
-  function logOut(): void {
-    Axios.get("http://127.0.0.1:8888/logout").then();
-    sessionStorage.clear();
-    window.location.replace("/");
   }
 
   return (

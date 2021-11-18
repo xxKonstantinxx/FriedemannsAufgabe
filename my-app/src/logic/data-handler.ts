@@ -57,7 +57,7 @@ export function Login(userName: string, password: string) {
   });
 }
 
-  function getAds(token: string) {
+function getAds(token: string) {
   return Axios.request<Array<Ad>>({
     method: "get",
     url: "http://127.0.0.1:8888/ads",
@@ -77,7 +77,7 @@ export function getCategories(token: string) {
   }).then((res) => res.data);
 }
 
-  function getUrls(token: string) {
+function getUrls(token: string) {
   return Axios.request<Array<Urls>>({
     method: "get",
     url: "http://127.0.0.1:8888/urls",
@@ -88,7 +88,7 @@ export function getCategories(token: string) {
 }
 
 var matchedAd: MatchedAd[] = [];
-export async function FetchData() {
+export async function fetchData() {
   var token = String(sessionStorage.getItem("token"));
   await Promise.all([getAds(token), getUrls(token), getCategories(token)]).then(
     (res) => {
@@ -198,6 +198,12 @@ export function deleteAd(id: string) {
       authorization: `Bearer ${token}`,
     },
   });
+}
+
+export function logOut(): void {
+  Axios.get("http://127.0.0.1:8888/logout").then();
+  sessionStorage.clear();
+  window.location.replace("/");
 }
 
 function matchAds(res: [Ad[], Urls[], Categories[]]) {
