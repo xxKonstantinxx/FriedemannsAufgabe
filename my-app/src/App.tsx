@@ -1,6 +1,7 @@
 import React from "react";
 import "./app.css";
 import LogIn from './components/login/login'
+import RouteHandler from './components/route-handler/route-handler'
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,6 +14,9 @@ function App (){
     <Router>
       <Switch>
         <Route exact path="/">
+          <RouteHandler/>
+        </Route>
+        <Route path="/login">
           <LogIn/>
         </Route>
         <Route path="/home">

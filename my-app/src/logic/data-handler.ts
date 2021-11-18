@@ -7,6 +7,18 @@ interface Data {
     token_type: string;
   }
 
+  interface urlData{
+    id: string
+    url: string
+    ad: string
+}
+
+interface UrlResponse {
+  ad: string;
+  id: string;
+  url: string;
+}
+
   interface Ad {
     id: string;
     title: string;
@@ -113,4 +125,99 @@ var matchedAd: MatchedAd[] = []
       }
     }
     return (matched);
+  }
+
+  export function submit (url : string, title: string, categories:Array<string>){
+    const token = sessionStorage.getItem('token')
+      return Axios.request<urlData>({
+          method: "post",
+          url: "http://127.0.0.1:8888/urls",
+          data: {url: url},
+          headers: {
+            AuthoriZation: `Bearer ${token}`,
+            "Content-Type": "application/json" 
+          },
+        }).then((res) => {
+          Axios.request<object>({
+              method: "post",
+              url: "http://127.0.0.1:8888/ads",
+              data: {title: title, click_url: res.data.id, categories: categories},
+              headers: {
+                AuthoriZation: `Bearer ${token}`,
+                "Content-Type": "application/json" 
+              },
+            }).then((res) => {
+              console.log(res);
+            });
+        });
+  }
+
+  export function editHandler(editedUrl: string, editedTitle: string, editedCategories: Array<string>, click_url: string, id: string, oldTitle: string) {
+    const token = sessionStorage.getItem('token')
+    if (editedUrl !== "") {
+      return Axios.request<UrlResponse>({
+        method: "patch",
+        url: `http://127.0.0.1:8888/urls/${click_url}`,
+        data: { url: editedUrl },
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          return Axios.request({
+            method: "patch",
+            url: `http://127.0.0.1:8888/ads/${id}`,
+            data: { title: editedTitle, categories: editedCategories },
+            headers: {
+              authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    } else if (editedTitle === "") {
+      return Axios.request({
+        method: "patch",
+        url: `http://127.0.0.1:8888/ads/${id}`,
+        data: { title: oldTitle, categories: editedCategories },
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    } else
+      return Axios.request({
+        method: "patch",
+        url: `http://127.0.0.1:8888/ads/${id}`,
+        data: { title: editedTitle, categories: editedCategories },
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+  }
+
+  export function deleteAd(id: string) {
+    const token = sessionStorage.getItem('token')
+    return Axios.request({
+      method: "delete",
+      url: `http://127.0.0.1:8888/ads/${id}`,
+      headers: {
+        authorization: `Bearer ${token}`
+      },
+    })
   }

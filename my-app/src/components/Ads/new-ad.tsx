@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import Axios from 'axios'
+import { submit } from '../../logic/data-handler'
 
 interface IProps {
     categories: Array<categories>
-    token: string
     onGetAds: () => void
   }
   
@@ -13,12 +12,6 @@ interface IProps {
     ads: Array<string>;
   }
 
-  interface urlData{
-      id: string
-      url: string
-      ad: string
-  }
-  
 
 function NewAd (props: IProps){
     const [isCreating, setIsCreating] = useState<boolean>(false)
@@ -26,32 +19,11 @@ function NewAd (props: IProps){
     const [categories, setCategories] = useState<Array<string>>([])
     const [url, setUrl] = useState<string>("")
 
-    function submit (){
 
-        Axios.request<urlData>({
-            method: "post",
-            url: "http://127.0.0.1:8888/urls",
-            data: {url: url},
-            headers: {
-              AuthoriZation: `Bearer ${props.token}`,
-              "Content-Type": "application/json" 
-            },
-          }).then((res) => {
-            Axios.request<object>({
-                method: "post",
-                url: "http://127.0.0.1:8888/ads",
-                data: {title: title, click_url: res.data.id, categories: categories},
-                headers: {
-                  AuthoriZation: `Bearer ${props.token}`,
-                  "Content-Type": "application/json" 
-                },
-              }).then((res) => {
-                console.log(res);
-                props.onGetAds()
-              });
-          });
+    async function onSubmit(){
+      await submit(url, title, categories)
+      props.onGetAds()
     }
-
     return <div>
         {isCreating? 
         <div className="newad">
@@ -68,7 +40,7 @@ function NewAd (props: IProps){
             <label>url:</label>
             <input type="text" onChange={(event) => {setUrl(event.target.value)}}></input>
             <button onClick={(event: React.MouseEvent<HTMLElement>) => {
-          submit();
+          onSubmit();
         }}>Submit</button>
         </div> : <div><button onClick={(event: React.MouseEvent<HTMLElement>) => {
           setIsCreating(true);

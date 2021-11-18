@@ -7,9 +7,7 @@ interface Data {
     token_type: string;
   }
 
-var token = ""
 var refresh_token = ""
-var expires = 0
 
 function refreshSession(){
     Axios.request<Data>({
@@ -23,13 +21,11 @@ function refreshSession(){
       sessionStorage.setItem("token", res.data.token);
       sessionStorage.setItem("refresh_token", res.data.refresh_token);
       sessionStorage.setItem("expires", JSON.stringify(res.data.expires));
-      SessionHandler();
+      sessionHandler();
       console.log("Token refreshed")
   })}
 
-export function SessionHandler(){
-    token = String(sessionStorage.getItem("token"));
+export function sessionHandler(){
     refresh_token = String(sessionStorage.getItem("refresh_token"));
-    expires = Number(sessionStorage.getItem("expires"));
     setTimeout(refreshSession, 180000)
 }

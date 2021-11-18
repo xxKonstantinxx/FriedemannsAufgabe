@@ -5,7 +5,6 @@ import EditAd from "./edit-ad";
 interface IProps {
   ads: Array<Ad>;
   categories: Array<Categorie>;
-  token: string;
   onGetAds: () => void;
 }
 
@@ -37,7 +36,6 @@ function Ads(props: IProps) {
         return (
           <div key={key}>
             <EditAd
-              token={props.token}
               onGetAds={props.onGetAds}
               click_url={val.click_url}
               id={val.id}
