@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteAd, editHandler } from '../../logic/data-handler'
+import { deleteAd, editHandler } from "../../logic/data-handler";
 import "./ads.css";
 
 interface IProps {
@@ -18,17 +18,22 @@ interface Categories {
   ads: Array<string>;
 }
 
-
 function EditAd(props: IProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedCategories, setEditedCategories] = useState<Array<string>>([]);
   const [editedTitle, setEditedTitle] = useState("");
   const [editedUrl, setEditedUrl] = useState("");
 
-
-  async function onEdit(){
-    await editHandler(editedUrl, editedTitle, editedCategories, props.click_url, props.id, props.title)
-    setIsEditing(false)
+  async function onEdit() {
+    await editHandler(
+      editedUrl,
+      editedTitle,
+      editedCategories,
+      props.click_url,
+      props.id,
+      props.title
+    );
+    setIsEditing(false);
   }
 
   function startEditing() {
@@ -39,9 +44,9 @@ function EditAd(props: IProps) {
     setIsEditing(false);
   }
 
-  async function onDeleteAd(){
-    await deleteAd(props.id)
-    props.onGetAds()
+  async function onDeleteAd() {
+    await deleteAd(props.id);
+    props.onGetAds();
   }
   return (
     <div className="ads">
@@ -51,17 +56,23 @@ function EditAd(props: IProps) {
           <p className="categorie ad">{props.categories}</p>
           <p className="click_url ad">{props.url}</p>
           <div className="buttonwrap">
-          <button className="editbtn"
-            onClick={(event: React.MouseEvent<HTMLElement>) => {
-              startEditing();
-            }}
-          >
-            Edit
-          </button>
-          <button className="deletebtn" onClick={(event: React.MouseEvent<HTMLElement>) => {
-              onDeleteAd();
-            }}>delete</button>
-            </div>
+            <button
+              className="editbtn"
+              onClick={(event: React.MouseEvent<HTMLElement>) => {
+                startEditing();
+              }}
+            >
+              Edit
+            </button>
+            <button
+              className="deletebtn"
+              onClick={(event: React.MouseEvent<HTMLElement>) => {
+                onDeleteAd();
+              }}
+            >
+              delete
+            </button>
+          </div>
         </div>
       ) : (
         <div className="ads">
