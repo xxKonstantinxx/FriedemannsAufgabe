@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import { deleteAd, editHandler } from "../../logic/data-handler";
 import "./ads.css";
 
 interface IProps {
@@ -7,7 +7,6 @@ interface IProps {
   categories: string[];
   url: string | undefined;
   categorieList: Array<Categories>;
-  token: string;
   id: string;
   click_url: string;
   onGetAds: () => void;
@@ -19,101 +18,36 @@ interface Categories {
   ads: Array<string>;
 }
 
-interface UrlResponse {
-  ad: string;
-  id: string;
-  url: string;
-}
-
 function EditAd(props: IProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedCategories, setEditedCategories] = useState<Array<string>>([]);
   const [editedTitle, setEditedTitle] = useState("");
   const [editedUrl, setEditedUrl] = useState("");
 
-  function editHandler() {
-    if (editedUrl !== "") {
-      return Axios.request<UrlResponse>({
-        method: "patch",
-        url: `http://127.0.0.1:8888/urls/${props.click_url}`,
-        data: { url: editedUrl },
-        headers: {
-          authorization: `Bearer ${props.token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          console.log(res);
-          return Axios.request({
-            method: "patch",
-            url: `http://127.0.0.1:8888/ads/${props.id}`,
-            data: { title: editedTitle, categories: editedCategories },
-            headers: {
-              authorization: `Bearer ${props.token}`,
-              "Content-Type": "application/json",
-            },
-          })
-            .then((res) => {
-              console.log(res);
-              setIsEditing(false);
-              props.onGetAds();
-            })
-            .catch((err) => console.log(err));
-        })
-        .catch((err) => console.log(err));
-    } else if (editedTitle === "") {
-      return Axios.request({
-        method: "patch",
-        url: `http://127.0.0.1:8888/ads/${props.id}`,
-        data: { title: props.title, categories: editedCategories },
-        headers: {
-          authorization: `Bearer ${props.token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          console.log(res);
-          setIsEditing(false);
-          props.onGetAds();
-        })
-        .catch((err) => console.log(err));
-    } else
-      return Axios.request({
-        method: "patch",
-        url: `http://127.0.0.1:8888/ads/${props.id}`,
-        data: { title: editedTitle, categories: editedCategories },
-        headers: {
-          authorization: `Bearer ${props.token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          console.log(res);
-          setIsEditing(false);
-          props.onGetAds();
-        })
-        .catch((err) => console.log(err));
-  }
-
-  function deleteAd() {
-    Axios.request({
-      method: "delete",
-      url: `http://127.0.0.1:8888/ads/${props.id}`,
-      headers: {
-        authorization: `Bearer ${props.token}`
-      },
-    }).then((res) => {console.log(res); props.onGetAds()})
+  async function onEdit() {
+    await editHandler(
+      editedUrl,
+      editedTitle,
+      editedCategories,
+      props.click_url,
+      props.id,
+      props.title
+    );
+    setIsEditing(false);
   }
 
   function startEditing() {
     setIsEditing(true);
-    console.log(props.categorieList);
   }
 
   function stopEditing() {
     setIsEditing(false);
   }
 
+  async function onDeleteAd() {
+    await deleteAd(props.id);
+    props.onGetAds();
+  }
   return (
     <div className="ads">
       {!isEditing ? (
@@ -122,17 +56,23 @@ function EditAd(props: IProps) {
           <p className="categorie ad">{props.categories}</p>
           <p className="click_url ad">{props.url}</p>
           <div className="buttonwrap">
-          <button className="editbtn"
-            onClick={(event: React.MouseEvent<HTMLElement>) => {
-              startEditing();
-            }}
-          >
-            Edit
-          </button>
-          <button className="deletebtn" onClick={(event: React.MouseEvent<HTMLElement>) => {
-              deleteAd();
-            }}>delete</button>
-            </div>
+            <button
+              className="editbtn"
+              onClick={(event: React.MouseEvent<HTMLElement>) => {
+                startEditing();
+              }}
+            >
+              Edit
+            </button>
+            <button
+              className="deletebtn"
+              onClick={(event: React.MouseEvent<HTMLElement>) => {
+                onDeleteAd();
+              }}
+            >
+              delete
+            </button>
+          </div>
         </div>
       ) : (
         <div className="ads">
@@ -165,7 +105,7 @@ function EditAd(props: IProps) {
           ></input>
           <button
             onClick={(event: React.MouseEvent<HTMLElement>) => {
-              editHandler();
+              onEdit();
             }}
           >
             Submit
