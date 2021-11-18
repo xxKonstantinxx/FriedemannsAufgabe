@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import { Login } from '../../logic/data-handler'
 
-interface Data {
-  expires: number;
-  refresh_token: string;
-  token: string;
-  token_type: string;
-}
 
 function App() {
   const [userName, setUserName] = useState("");
@@ -14,7 +8,7 @@ function App() {
   const [isValid, setIsValid] = useState(true);
 
   function logInHandler() {
-    login()
+    Login(userName, password)
       .then((res) => {
         sessionStorage.setItem("token", res.data.token);
         sessionStorage.setItem("refresh_token", res.data.refresh_token);
@@ -22,17 +16,6 @@ function App() {
         window.location.replace("/home");
       })
       .catch(() => setIsValid(false));
-  }
-
-  function login() {
-    return Axios.request<Data>({
-      method: "post",
-      url: "http://127.0.0.1:8888/login",
-      data: { username: userName, password: password },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
   }
 
   return (
