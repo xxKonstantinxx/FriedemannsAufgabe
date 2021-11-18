@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { submit } from "../../logic/data-handler";
 
 interface IProps {
-  categories: Array<categories>;
+  categories: Array<Categories>;
   onGetAds: () => void;
 }
 
-interface categories {
+interface Categories {
   id: string;
   name: string;
   ads: Array<string>;

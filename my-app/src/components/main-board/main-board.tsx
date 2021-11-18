@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Ads from "../ads/ads";
 import NewAd from "../ads/new-ad";
 import Axios from "axios";
-import { FetchData, GetCategories } from "../../logic/data-handler";
+import { FetchData, getCategories } from "../../logic/data-handler";
 import { sessionHandler } from "../../logic/session-handler";
 
 interface Categories {
@@ -30,7 +30,7 @@ const MainBoard = () => {
 
   async function getAdsHandler() {
     setMatchedAds(await FetchData());
-    setCategories(await GetCategories(String(sessionStorage.getItem("token"))));
+    setCategories(await getCategories(String(sessionStorage.getItem("token"))));
   }
 
   function logOut(): void {

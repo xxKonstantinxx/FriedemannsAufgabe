@@ -7,7 +7,7 @@ interface Data {
   token_type: string;
 }
 
-interface urlData {
+interface UrlData {
   id: string;
   url: string;
   ad: string;
@@ -57,7 +57,7 @@ export function Login(userName: string, password: string) {
   });
 }
 
-export function GetAds(token: string) {
+  function getAds(token: string) {
   return Axios.request<Array<Ad>>({
     method: "get",
     url: "http://127.0.0.1:8888/ads",
@@ -67,7 +67,7 @@ export function GetAds(token: string) {
   }).then((res) => res.data);
 }
 
-export function GetCategories(token: string) {
+export function getCategories(token: string) {
   return Axios.request<Array<Categories>>({
     method: "get",
     url: "http://127.0.0.1:8888/categories",
@@ -77,7 +77,7 @@ export function GetCategories(token: string) {
   }).then((res) => res.data);
 }
 
-export function GetUrls(token: string) {
+  function getUrls(token: string) {
   return Axios.request<Array<Urls>>({
     method: "get",
     url: "http://127.0.0.1:8888/urls",
@@ -90,7 +90,7 @@ export function GetUrls(token: string) {
 var matchedAd: MatchedAd[] = [];
 export async function FetchData() {
   var token = String(sessionStorage.getItem("token"));
-  await Promise.all([GetAds(token), GetUrls(token), GetCategories(token)]).then(
+  await Promise.all([getAds(token), getUrls(token), getCategories(token)]).then(
     (res) => {
       matchedAd = matchAds(res);
     }
@@ -100,7 +100,7 @@ export async function FetchData() {
 
 export function submit(url: string, title: string, categories: Array<string>) {
   const token = sessionStorage.getItem("token");
-  return Axios.request<urlData>({
+  return Axios.request<UrlData>({
     method: "post",
     url: "http://127.0.0.1:8888/urls",
     data: { url: url },
