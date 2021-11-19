@@ -4,6 +4,7 @@ import LogIn from "./components/login/login";
 import RouteHandler from "./components/route-handler/route-handler";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainBoard from "./components/main-board/main-board";
+import NewAd from "./components/ads/new-ad";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           </Route>
           <Route path="/home">
             <MainBoard />
+          </Route>
+          <Route path="/newad">
+          <NewAd />
           </Route>
         </Switch>
       </Router>

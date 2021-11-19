@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Ads from "../ads/ads";
-import NewAd from "../ads/new-ad";
 import { fetchData, getCategories, logOut } from "../../logic/data-handler";
 import { sessionHandler } from "../../logic/session-handler";
 
@@ -43,17 +42,18 @@ const MainBoard = () => {
         Log Out
       </button>
       <div className="App">
+      <button
+            onClick={(event: React.MouseEvent<HTMLElement>) => {
+              window.location.replace('/newad');
+            }}
+          >
+            Create Ad
+          </button>
         <Ads
           ads={matchedAds}
           categories={categories}
           onGetAds={getAdsHandler}
         />
-        <NewAd categories={categories} onGetAds={getAdsHandler} />
-        <button
-          onClick={(event: React.MouseEvent<HTMLElement>) => {
-            getAdsHandler();
-          }}
-        ></button>
       </div>
     </div>
   );

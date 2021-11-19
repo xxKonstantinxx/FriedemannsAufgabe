@@ -6,8 +6,7 @@
 
 .newad{
     display:flex;
-    flex-direction: column;
-    margin-bottom: 200px;
+    flex-direction: row;
 }
 
 .newad input{
@@ -51,3 +50,15 @@
     width:344px;
 }
 
+.create-ad{
+    margin-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    margin-left: 25%;
+    
+}
+
+.cancelbtn{
+    width:300px;
+    justify-content: center;
+}
