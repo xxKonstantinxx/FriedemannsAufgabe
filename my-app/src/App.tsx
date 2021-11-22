@@ -1,10 +1,12 @@
 import React from "react";
 import "./app.css";
 import LogIn from "./components/login/login";
-import RouteHandler from "./components/route-handler/route-handler";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainBoard from "./components/main-board/main-board";
 import NewAd from "./components/ads/new-ad";
+import RouteHandler from "./components/route-handler/route-handler";
+
+
 
 function App() {
   return (
@@ -12,7 +14,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <RouteHandler />
+            <RouteHandler/>
           </Route>
           <Route path="/login">
             <LogIn />

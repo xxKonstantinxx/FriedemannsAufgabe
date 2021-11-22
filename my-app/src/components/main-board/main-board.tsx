@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Ads from "../ads/ads";
 import { fetchData, getCategories, logOut } from "../../logic/data-handler";
 import { sessionHandler } from "../../logic/session-handler";
+import { routeHandler } from "../../logic/route-handler";
 
 interface Categories {
   id: string;
@@ -22,6 +23,7 @@ const MainBoard = () => {
   const [categories, setCategories] = useState<Array<Categories>>([]);
 
   useEffect(() => {
+    routeHandler();
     getAdsHandler();
     sessionHandler();
   }, []);
