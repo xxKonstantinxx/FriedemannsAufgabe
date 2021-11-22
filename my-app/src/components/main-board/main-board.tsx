@@ -23,7 +23,7 @@ const MainBoard = () => {
   const [categories, setCategories] = useState<Array<Categories>>([]);
 
   useEffect(() => {
-    routeHandler();
+    routeHandler()
     getAdsHandler();
     sessionHandler();
   }, []);
