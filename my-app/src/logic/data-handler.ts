@@ -49,7 +49,7 @@ interface MatchedAd {
 export function Login(userName: string, password: string) {
   return Axios.request<Data>({
     method: "post",
-    url: "http://127.0.0.1:8888/login",
+    url: "http://85.214.140.185:8888/login",
     data: { username: userName, password: password },
     headers: {
       "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export function Login(userName: string, password: string) {
 function getAds(token: string) {
   return Axios.request<Array<Ad>>({
     method: "get",
-    url: "http://127.0.0.1:8888/ads",
+    url: "http://85.214.140.185:8888/ads",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -70,7 +70,7 @@ function getAds(token: string) {
 export function getCategories(token: string) {
   return Axios.request<Array<Categories>>({
     method: "get",
-    url: "http://127.0.0.1:8888/categories",
+    url: "http://85.214.140.185:8888/categories",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -80,7 +80,7 @@ export function getCategories(token: string) {
 function getUrls(token: string) {
   return Axios.request<Array<Urls>>({
     method: "get",
-    url: "http://127.0.0.1:8888/urls",
+    url: "http://85.214.140.185:8888/urls",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -98,29 +98,34 @@ export async function fetchData() {
   return matchedAd;
 }
 
-export function submit(url: string, title: string, categories: Array<string>) {
+export async function submit(url: string, title: string, categories: Array<string>){
+  await submitUrl(url).then(res => submitAd(title, categories, res.data.id))
+}
+
+function submitUrl(url: string){
   const token = sessionStorage.getItem("token");
-  return Axios.request<UrlData>({
+    return Axios.request<UrlData>({
     method: "post",
-    url: "http://127.0.0.1:8888/urls",
+    url: "http://85.214.140.185:8888/urls",
     data: { url: url },
     headers: {
       AuthoriZation: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-  }).then((res) => {
-    Axios.request<object>({
-      method: "post",
-      url: "http://127.0.0.1:8888/ads",
-      data: { title: title, click_url: res.data.id, categories: categories },
-      headers: {
-        AuthoriZation: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      console.log(res);
-    });
-  });
+  })
+}
+
+function submitAd(title: string, categories: Array<string>, click_url: string){
+  const token = sessionStorage.getItem("token");
+  return Axios.request<object>({
+    method: "post",
+    url: "http://85.214.140.185:8888/ads",
+    data: { title: title, click_url: click_url, categories: categories },
+    headers: {
+      AuthoriZation: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
 }
 
 export function editHandler(
@@ -135,7 +140,7 @@ export function editHandler(
   if (editedUrl !== "") {
     return Axios.request<UrlResponse>({
       method: "patch",
-      url: `http://127.0.0.1:8888/urls/${click_url}`,
+      url: `http://85.214.140.185:8888/urls/${click_url}`,
       data: { url: editedUrl },
       headers: {
         authorization: `Bearer ${token}`,
@@ -146,7 +151,7 @@ export function editHandler(
         console.log(res);
         return Axios.request({
           method: "patch",
-          url: `http://127.0.0.1:8888/ads/${id}`,
+          url: `http://85.214.140.185:8888/ads/${id}`,
           data: { title: editedTitle, categories: editedCategories },
           headers: {
             authorization: `Bearer ${token}`,
@@ -162,7 +167,7 @@ export function editHandler(
   } else if (editedTitle === "") {
     return Axios.request({
       method: "patch",
-      url: `http://127.0.0.1:8888/ads/${id}`,
+      url: `http://85.214.140.185:8888/ads/${id}`,
       data: { title: oldTitle, categories: editedCategories },
       headers: {
         authorization: `Bearer ${token}`,
@@ -176,7 +181,7 @@ export function editHandler(
   } else
     return Axios.request({
       method: "patch",
-      url: `http://127.0.0.1:8888/ads/${id}`,
+      url: `http://85.214.140.185:8888/ads/${id}`,
       data: { title: editedTitle, categories: editedCategories },
       headers: {
         authorization: `Bearer ${token}`,
@@ -193,7 +198,7 @@ export function deleteAd(id: string) {
   const token = sessionStorage.getItem("token");
   return Axios.request({
     method: "delete",
-    url: `http://127.0.0.1:8888/ads/${id}`,
+    url: `http://85.214.140.185:8888/ads/${id}`,
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -201,7 +206,7 @@ export function deleteAd(id: string) {
 }
 
 export function logOut(): void {
-  Axios.get("http://127.0.0.1:8888/logout").then();
+  Axios.get("http://85.214.140.185:8888/logout").then();
   sessionStorage.clear();
   window.location.replace("/");
 }
