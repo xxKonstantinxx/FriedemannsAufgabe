@@ -1,64 +1,63 @@
-.ads{
-    display:flex;
-    flex-direction: row;
-    text-align: left;
+.ads {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
 }
 
-.newad{
-    display:flex;
-    flex-direction: row;
+.newad {
+  display: flex;
+  flex-direction: row;
 }
 
-.newad input{
-    margin-bottom:20px;
+.newad input {
+  margin-bottom: 20px;
 }
 
-.newad select{
-    margin-bottom: 20px;;
+.newad select {
+  margin-bottom: 20px;
 }
 
-.ad{
-    padding:20px;
-    width:300px;
-    user-select: none;
-    cursor: default;
+.ad {
+  padding: 20px;
+  width: 300px;
+  user-select: none;
+  cursor: default;
 }
-.edit-ad{
-    width:300px;
-    padding:20px;
-}
-
-.title{
-    border: 2px solid blue;
+.edit-ad {
+  width: 300px;
+  padding: 20px;
 }
 
-.categorie{
-    border-top: 2px solid blue;
-    border-bottom: 2px solid blue;
+.title {
+  border: 2px solid blue;
 }
 
-.click_url{
-    border: 2px solid blue;
+.categorie {
+  border-top: 2px solid blue;
+  border-bottom: 2px solid blue;
+}
+
+.click_url {
+  border: 2px solid blue;
 }
 
 .label {
-    display:flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-.label label{
-    width:344px;
+.label label {
+  width: 344px;
 }
 
-.create-ad{
-    margin-top: 20vh;
-    display: flex;
-    flex-direction: column;
-    margin-left: 25%;
-    
+.create-ad {
+  margin-top: 20vh;
+  display: flex;
+  flex-direction: column;
+  margin-left: 25%;
 }
 
-.cancelbtn{
-    width:300px;
-    justify-content: center;
+.cancelbtn {
+  width: 300px;
+  justify-content: center;
 }

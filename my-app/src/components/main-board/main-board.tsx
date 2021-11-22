@@ -42,13 +42,13 @@ const MainBoard = () => {
         Log Out
       </button>
       <div className="App">
-      <button
-            onClick={(event: React.MouseEvent<HTMLElement>) => {
-              window.location.replace('/newad');
-            }}
-          >
-            Create Ad
-          </button>
+        <button
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            window.location.replace("/newad");
+          }}
+        >
+          Create Ad
+        </button>
         <Ads
           ads={matchedAds}
           categories={categories}

@@ -98,13 +98,17 @@ export async function fetchData() {
   return matchedAd;
 }
 
-export async function submit(url: string, title: string, categories: Array<string>){
-  await submitUrl(url).then(res => submitAd(title, categories, res.data.id))
+export async function submit(
+  url: string,
+  title: string,
+  categories: Array<string>
+) {
+  await submitUrl(url).then((res) => submitAd(title, categories, res.data.id));
 }
 
-function submitUrl(url: string){
+function submitUrl(url: string) {
   const token = sessionStorage.getItem("token");
-    return Axios.request<UrlData>({
+  return Axios.request<UrlData>({
     method: "post",
     url: "http://85.214.140.185:8888/urls",
     data: { url: url },
@@ -112,10 +116,10 @@ function submitUrl(url: string){
       AuthoriZation: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-  })
+  });
 }
 
-function submitAd(title: string, categories: Array<string>, click_url: string){
+function submitAd(title: string, categories: Array<string>, click_url: string) {
   const token = sessionStorage.getItem("token");
   return Axios.request<object>({
     method: "post",
@@ -125,7 +129,7 @@ function submitAd(title: string, categories: Array<string>, click_url: string){
       AuthoriZation: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-  })
+  });
 }
 
 export function editHandler(

@@ -21,7 +21,7 @@ function NewAd() {
 
   async function onSubmit() {
     await submit(url, title, categories);
-    window.location.replace('/home')
+    window.location.replace("/home");
   }
   return (
     <div className="create-ad">
@@ -60,7 +60,8 @@ function NewAd() {
           Submit
         </button>
       </div>
-      <button className="cancelbtn"
+      <button
+        className="cancelbtn"
         onClick={(event: React.MouseEvent<HTMLElement>) => {
           window.location.replace("/home");
         }}
