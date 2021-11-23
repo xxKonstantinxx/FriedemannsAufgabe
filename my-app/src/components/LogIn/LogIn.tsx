@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Login } from '../../logic/data-handler'
-
+import { Login } from "../../logic/data-handler";
 
 function App() {
   const [userName, setUserName] = useState("");

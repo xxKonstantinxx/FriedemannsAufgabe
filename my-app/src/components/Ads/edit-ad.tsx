@@ -33,6 +33,7 @@ function EditAd(props: IProps) {
       props.id,
       props.title
     );
+    props.onGetAds();
     setIsEditing(false);
   }
 
